@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="a35eafec-7008-490f-b64f-de2469993714" >
+		<http:listener-connection host="${host}" port="${port}" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="502985a3-3bad-4f69-85d7-96ec086da021" file="configurarion\local.properties" />
+	<flow name="travelapiFlow" doc:id="40dae30f-0c57-4d71-8d7b-a588a5506e29" >
+		<http:listener doc:name="Listener" doc:id="36ba158b-c1fa-42f1-88db-9639dc8dfbc2" path="${path}" config-ref="HTTP_Listener_config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="24ccdb65-c016-4eec-91a4-1d6740f01943" message="request recived from exterrnal tavelontip system for transectionid#[attributes.headers.transctionid]"/>
+		<logger level="INFO" doc:name="Logger" doc:id="3c074a28-21a1-44af-bdb7-75d2b5ac7f73" message="response recived from exterrnal tavelontip system for transectionid#[attributes.headers.transctionid]"/>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="ae5dab26-2e67-4a05-b5bd-3b30b4fe43c4" >
+				<logger level="INFO" doc:name="Logger" doc:id="0009bb6d-a255-4ec8-9da0-015cef57aa0a" message="error recived from exterrnal tavelontip system for transectionid#[attributes.headers.transctionid]"/>
+			</on-error-propagate>
+		</error-handler>
+	
+</flow>
+	
+	
+	</mule>
